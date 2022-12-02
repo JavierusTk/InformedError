@@ -22,6 +22,7 @@ type
     constructor Create;
     destructor Destroy; override;
     class function InformError(const ErrorDescription:string):IInformedError;
+    class function InformErrorFmt(const ErrorDescription:string;Args:Array of const):IInformedError;
     class function InformOK:IInformedError;
   end;
 
@@ -89,6 +90,11 @@ class function TInformedError.InformError(const ErrorDescription: string): IInfo
 begin
   result:=Create;
   result.AddError(ErrorDescription);
+end;
+
+class function TInformedError.InformErrorFmt(const ErrorDescription: string; Args: array of const): IInformedError;
+begin
+  result:=InformError(Format(ErrorDescription,Args));
 end;
 
 class function TInformedError.InformOK: IInformedError;
